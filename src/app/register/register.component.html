@@ -1,0 +1,192 @@
+<div class="container-fluid">
+  <div class="well row">
+    <div class="form-horizontal col-md-12">
+      <div class="col-md-5">
+        <form [formGroup]="ngForm" (ngSubmit)="onSubmit(ngForm.value)">
+          <fieldset>
+
+            <!-- Form Name -->
+            <legend>
+
+              <h2><b>Registration Form</b></h2>
+
+            </legend><br>
+
+            <!-- Text input-->
+            <input type="hidden" class="form-control" name="_id" formControlName="_id">
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">First Name</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input name="first_name" placeholder="First Name" class="form-control" type="text"
+                    formControlName="first_name">
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Last Name</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input name="last_name" placeholder="Last Name" class="form-control" type="text"
+                    formControlName="last_name">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Department / Office</label>
+              <div class="col-md-6 selectContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                  <select name="department" class="form-control selectpicker" formControlName="department">
+                    <option value="">Select your Department/Office</option>
+                    <option>Department of Engineering</option>
+                    <option>Department of Agriculture</option>
+                    <option>Accounting Office</option>
+                    <option>Tresurer's Office</option>
+                    <option>MPDC</option>
+                    <option>MCTC</option>
+                    <option>MCR</option>
+                    <option>Mayor's Office</option>
+                    <option>Tourism Office</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Username</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input name="user_name" placeholder="Username" class="form-control" type="text"
+                    formControlName="user_name">
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Password</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input name="user_password" placeholder="Password" class="form-control" type="password"
+                    formControlName="user_password">
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Confirm Password</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                  <input name="confirm_password" placeholder="Confirm Password" class="form-control" type="password"
+                    formControlName="confirm_password">
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label">E-Mail</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                  <input name="email" placeholder="E-Mail Address" class="form-control" type="text"
+                    formControlName="email">
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Text input-->
+
+            <div class="form-group">
+              <label class="col-md-2 control-label">Contact No.</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                  <input name="contact_no" placeholder="(639)" class="form-control" type="text"
+                    formControlName="contact_no">
+                </div>
+              </div>
+            </div>
+
+            <!-- Select Basic -->
+
+            <!-- Success message -->
+            <div class="alert alert-success" role="alert" id="success_message">Success <i
+                class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label"></label>
+              <div class="col-md-4"><br>
+                &nbsp;<button type="submit" class="btn btn-warning">SUBMIT <span
+                    class="glyphicon glyphicon-send"></span></button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="col-md-7">
+        <fieldset>
+          <legend>
+            <h2><b>Customers Data</b></h2>
+          </legend>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Index</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Department</th>
+                  <th>User Name</th>
+                  <th>User Password</th>
+                  <th>Confirm Password</th>
+                  <th>Email</th>
+                  <th>Contact No</th>
+                  <th>Operations</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customers; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{customer.first_name}}</td>
+                  <td>{{customer.last_name}}</td>
+                  <td>{{customer.department}}</td>
+                  <td>{{customer.user_name}}</td>
+                  <td>{{customer.user_password}}</td>
+                  <td>{{customer.confirm_password}}</td>
+                  <td>{{customer.email}}</td>
+                  <td>{{customer.contact_no}}</td>
+                  <td> <span><i class="glyphicon glyphicon-edit" (click)="onEdit(customer._id, customer)"></i>
+                      <i class="glyphicon glyphicon-trash" (click)="onDelete(customer._id)"></i></span> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div>/.container -->
