@@ -190,3 +190,43 @@
   </div>
 </div>
 <!-- </div>/.container -->
+
+<h1>File Upload</h1>
+<div class="container">
+  <div class="row">
+
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+
+      <!-- Progress Bar
+      <div class="progress form-group" *ngIf="fileUploadService.percentDone">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+          [style.width.%]="fileUploadService.percentDone">
+        </div>
+      </div> -->
+
+      <!-- Image Preview -->
+      <div class="form-group">
+        <div class="preview" *ngIf="preview && preview !== null">
+          <img [src]="preview" [alt]="form.value.name">
+        </div>
+      </div>
+
+      <!-- File Input -->
+      <div class="form-group">
+        <input type="file" name="avatar"  (change)="uploadFile($event)">
+      </div>
+
+      <!-- Name -->
+      <div class="form-group input-group-lg">
+        <input class="form-control" placeholder="Name" formControlName="name">
+      </div>
+
+      <!-- Submit -->
+      <div class="form-group">
+        <button class="btn btn-danger btn-block btn-lg">Create User</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

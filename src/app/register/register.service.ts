@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Customer } from './customer';
 import { Observable } from 'rxjs';
-
+import { User } from "./image";
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
-
+images;
   constructor(private http: HttpClient) { }
 
 
@@ -59,5 +59,33 @@ export class RegisterService {
     };
     return this.http.delete<Customer[]>('http://localhost:3001/deleteCustomer', options);
   }
+
+  fileUpload(){
+    const formData = new FormData();
+    formData.append('files', this.images);
+    this.http.post<any>('http://localhost:3001/file', formData).subscribe(
+
+    )
+  }
+
+
+   // Get Users
+   getUsers() {
+    return this.http.get("http://localhost:3001/file")
+  }
+
+  // Create User
+  addUser(name: string, profileImage: File): Observable<any> {
+    var formData: any = new FormData();
+    formData.append("name", name);
+    formData.append("avatar", profileImage);
+
+    return this.http.post<User>("http://localhost:3001/file", formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+  }
+
+
 
 }

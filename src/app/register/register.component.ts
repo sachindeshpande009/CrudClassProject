@@ -3,6 +3,7 @@ import { FormGroup, FormControlName, FormControl, FormBuilder, Validators } from
 import { Customer } from './customer';
 import { RegisterService } from "./register.service";
 import { Router } from "@angular/router";
+import { User } from "./image";
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,12 @@ export class RegisterComponent implements OnInit {
 
   customers: Customer[] = [];
   selectedCustomer: Customer;
+  // images;
+
+  preview: string;
+  form: FormGroup;
+  percentDone: any = 0;
+  users = [];
 
   ngForm = this.fb.group({
     _id: [''],
@@ -27,7 +34,13 @@ export class RegisterComponent implements OnInit {
     contact_no: ['', Validators.required]
   })
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService, private router: Router) { }
+  constructor(private fb: FormBuilder, private registerService: RegisterService, private router: Router) { 
+    // Reactive Form
+    this.form = this.fb.group({
+      name: [''],
+      avatar: [null]
+    })
+   }
 
   ngOnInit() {
     this.ngOnChanges();
@@ -102,6 +115,49 @@ export class RegisterComponent implements OnInit {
       })
     }
   }
+
+  // selectImage(event){
+  //   console.log(event.target.files[0])
+  //   if(event.target.files.length > 0){
+  //     const file = event.target.files[0];
+  //     this.images = file;
+
+  //   }
+  // }
+
+  // onUpload(image){
+  //   alert("hiiiiii")
+  //   const formData = new FormData();
+  //   formData.append('file', this.images);
+  //   this.registerService.fileUpload()
+  // }
+
+
+
+
+
+
+
+   // Image Preview
+   uploadFile(event) {
+    const file = event.target.files[0];
+    this.form.patchValue({avatar: file});
+    this.form.get('avatar').updateValueAndValidity()
+
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+
+  submitForm() {
+    this.registerService.addUser(this.form.value.name, this.form.value.avatar).subscribe((res) => {
+      console.log(res);
+    })
+  }
+
 
 
 }
