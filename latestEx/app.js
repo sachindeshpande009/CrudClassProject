@@ -59,38 +59,47 @@ app.post('/file', upload.single('avatar'), (req, res, next) => {
         };
         MongoClient.connect('mongodb://localhost:27017/emp', function (err, db) {
             if (err) {
-                console.log(err)
+                throw err;
             }
             else {
-                user.save().then(result => {
-                    console.log(result);
-                    res.status(201).json({
-                        message: "User registered successfully!",
-                        userCreated: {
-                            _id: result._id,
-                            name: result.name,
-                            avatar: result.avatar
+                let custRes = {}
+                db.collection("user").insertOne(user, function (err, result) {
+                    if (err) {
+                        custRes = {
+                            
+                            "status": 400,
+                            "msg": "Image not Saved",
+                            "error": err
                         }
-                    })
-                }).catch(err => {
-                    console.log(err),
-                        res.status(500).json({
-                            error: err
-                        });
-                })
+                    }
+                    else {
+                        custRes = {
+                            "status": 200,
+                            "msg": "Successfully Saved",
+                            "result": result
+                        }
+
+                    }
+
+                    res.json(custRes);
+                });
+
+                //res.send("Database Connected ...!");
             }
-        })
+        });
     }
     else {
-        res.status(400).json({
-            message: "something went wrong"
-        })
-
+        custRes = {
+            "status": 400,
+            "error": "not found"
+        }
+        res.json(custRes);
     }
-})
+
+});
 
 // GET All Users
-app.get("/", (req, res, next) => {
+app.get("/getFiles", (req, res, next) => {
     User.find().then(data => {
         res.status(200).json({
             message: "Users retrieved successfully!",
@@ -98,37 +107,6 @@ app.get("/", (req, res, next) => {
         });
     });
 });
-
-// app.post('/file', upload.single('file'), (req, res, next) => {
-//     console.log("hiii")
-//     const file = req.file;
-//     console.log(file.filename);
-//     if(!file){
-//         const error = new Error('Please Upload a File')
-//         error.httpStatusCode = 400
-//         return next(error);
-//     }
-//     res.send(file);
-//   })
-
-app.post('/photos/upload', upload.array('photos', 12), function (req, res, next) {
-    // req.files is array of `photos` files
-    // req.body will contain the text fields, if there were any
-})
-
-var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-app.post('/cool-profile', cpUpload, function (req, res, next) {
-    // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
-    //
-    // e.g.
-    //  req.files['avatar'][0] -> File
-    //  req.files['gallery'] -> Array
-    //
-    // req.body will contain the text fields, if there were any
-})
-
-
-
 
 //insert employee
 app.post('/register', (req, res) => {

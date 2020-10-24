@@ -71,7 +71,7 @@ images;
 
    // Get Users
    getUsers() {
-    return this.http.get("http://localhost:3001/file")
+    return this.http.get("http://localhost:3001/getFiles")
   }
 
   // Create User
